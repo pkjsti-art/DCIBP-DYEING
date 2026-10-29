@@ -5,11 +5,91 @@ from preparation import prepare_ibp, prepare_pibs
 from crosscheck import run_crosscheck
 from export import generate_excel_download
 
-# --- TARUH KODE st.markdown(""" <style> ... </style> """) ANDA DI SINI ---
+# Custom CSS for Cyber/Futuristic Theme
+st.markdown("""
+<style>
+    /* Full Futuristic Gradient Cyber Background with Matrix Grid */
+    .stApp {
+        background: radial-gradient(circle at 30% 20%, rgba(14, 21, 37, 0.95) 0%, rgba(10, 11, 21, 0.98) 100%),
+                    linear-gradient(rgba(0, 255, 204, 0.015) 1px, transparent 1px) 0 0 / 20px 20px,
+                    linear-gradient(90deg, rgba(0, 255, 204, 0.015) 1px, transparent 1px) 0 0 / 20px 20px;
+        color: #00ffcc !important;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    
+    /* Cyber Title & Text Neon Glow Effect */
+    h1, h2, h3, h4, h5, p, label, .stMarkdown, .stText {
+        color: #00ffcc !important;
+    }
+    h1, h2, h3 {
+        text-shadow: 0 0 5px rgba(0, 255, 204, 0.4), 
+                     0 0 15px rgba(0, 255, 204, 0.3), 
+                     0 0 30px rgba(0, 255, 204, 0.2);
+        letter-spacing: 1px;
+    }
+
+    /* Sidebar Visual Overhaul */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #090e1a 0%, #05060b 100%) !important;
+        border-right: 2px solid rgba(0, 255, 204, 0.2);
+        box-shadow: 5px 0 25px rgba(0, 255, 204, 0.05);
+    }
+    .sidebar .sidebar-content {
+        background: transparent !important;
+    }
+
+    /* Streamlit File Upload visual styling */
+    .stFileUploader {
+        background: rgba(14, 21, 37, 0.6) !important;
+        border: 1px solid rgba(0, 255, 204, 0.3) !important;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: inset 0 0 15px rgba(0, 255, 204, 0.05);
+    }
+    .stFileUploader>div>div>div>button {
+        color: #00ffcc !important;
+        border: 1px solid rgba(0, 255, 204, 0.5) !important;
+        background-color: rgba(0, 255, 204, 0.05) !important;
+    }
+
+    /* Cybermatic Buttons */
+    .stButton>button {
+        background: linear-gradient(135deg, rgba(0, 255, 204, 0.1) 0%, rgba(24, 24, 38, 0.8) 100%) !important;
+        color: #00ffcc !important;
+        border: 1px solid #00ffcc !important;
+        box-shadow: 0 0 12px rgba(0, 255, 204, 0.4), inset 0 0 8px rgba(0, 255, 204, 0.2);
+        border-radius: 6px;
+        font-weight: bold;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .stButton>button:hover {
+        background: #00ffcc !important;
+        color: #05060b !important;
+        box-shadow: 0 0 25px #00ffcc, inset 0 0 10px rgba(255,255,255,0.6);
+        transform: translateY(-2px);
+    }
+
+    /* Futuristic Cyber Borders & Tables */
+    .stDataFrame {
+        border: 1px solid rgba(0, 255, 204, 0.4) !important;
+        background: rgba(10, 11, 21, 0.9) !important;
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
+    }
+    
+    /* Notifikasi Box */
+    .stAlert {
+        background-color: rgba(14, 21, 37, 0.9) !important;
+        border: 1px solid #00ffcc !important;
+        color: #00ffcc !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 st.title("Data Control IBP Dyeing (DCIBP DYEING)")
 
-# 1. Inisialisasi Memori (Session State) agar hasil tidak hilang saat direfresh/download
+# 1. Inisialisasi Memori (Session State)
 if 'proses_selesai' not in st.session_state:
     st.session_state.proses_selesai = False
     st.session_state.hasil_akhir = None
@@ -51,12 +131,13 @@ if menu == "Crosscheck Data IBP Dyeing":
                     st.session_state.pibs_final = pibs_final
                     st.session_state.proses_selesai = True
                     
-                    st.success("Proses selesai!")
+                    st.success("Proses silang data selesai! Silakan lihat tabel di bawah.")
             except Exception as e:
                 st.error(f"Terjadi kesalahan saat memproses: {e}")
 
-    # 2. Tampilkan Tabel dan Tombol Download DI LUAR tombol proses (agar tidak hilang)
+    # 2. Tampilkan Tabel dan Tombol Download DI LUAR tombol proses
     if st.session_state.proses_selesai:
+        st.markdown("---")
         st.subheader("Tabel Hasil Cek Data (Worksheet)")
         st.dataframe(st.session_state.hasil_akhir, use_container_width=True)
 
