@@ -40,8 +40,8 @@ def run_crosscheck(ibp_df, pibs_df):
                         qty_pibs = matched_pibs['Actual'].values[0]
                         ibp_df.at[index, 'Qty PIBS'] = qty_pibs
                         
-                        # Kalkulasi Selisih
-                        selisih = qty_ibp - qty_pibs
+                        # === REVISI PERHITUNGAN (Actual PIBS - Qty IBP) ===
+                        selisih = qty_pibs - qty_ibp
                         ibp_df.at[index, 'Selisih (GR)'] = selisih
                         
                         # Penentuan Status
